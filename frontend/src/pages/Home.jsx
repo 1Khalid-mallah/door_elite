@@ -6,7 +6,6 @@ import WomenSalon from '../components/WomenSalon'
 import SpaWomen from '../components/SpaWomen'
 import SmartHome from '../components/SmartHome'
 import HomeCleaning from '../components/HomeCleaning'
-import HomePainting from '../components/HomePainting'
 import ApplianceService from '../components/ApplianceService'
 import HomeRepair from '../components/HomeRepair'
 import MassageMen from '../components/MassageMen'
@@ -18,16 +17,10 @@ const Home = () => {
     <div className="bg-white">
       <Hero />
       <NewNoteworthy />
-      <WallPanel/>
       <WomenSalon />
-      <SpaWomen />
       <SmartHome />
       <HomeCleaning />
-      <HomePainting />
       <ApplianceService />
-      <HomeRepair/>
-      <MassageMen />
-      <RoPurifier />
       <MenSalon />
     </div>
   )

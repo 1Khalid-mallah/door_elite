@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 import { User, Mail, Lock, Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
 
 const Signup = () => {

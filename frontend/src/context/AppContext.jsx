@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 /**
  * Application context that manages global state including user authentication,
@@ -571,6 +571,7 @@ export const AppProvider = ({ children }) => {
       const existingItem = prevCart.find(item => item._id === service._id);
 
       if (existingItem) {
+        toast.info(`${service.name} quantity increased in cart`);
         return prevCart.map(item =>
           item._id === service._id
             ? { ...item, quantity: item.quantity + 1 }
@@ -578,6 +579,7 @@ export const AppProvider = ({ children }) => {
         );
       }
 
+      toast.success(`${service.name} added to cart`);
       return [...prevCart, { ...service, quantity: 1 }];
     });
   }, []);
@@ -587,7 +589,13 @@ export const AppProvider = ({ children }) => {
    * @param {string} serviceId - Service ID
    */
   const removeFromCart = useCallback((serviceId) => {
-    setCart(prevCart => prevCart.filter(item => item._id !== serviceId));
+    setCart(prevCart => {
+      const item = prevCart.find(item => item._id === serviceId);
+      if (item) {
+        toast.info(`${item.name} removed from cart`);
+      }
+      return prevCart.filter(item => item._id !== serviceId);
+    });
   }, []);
 
   /**

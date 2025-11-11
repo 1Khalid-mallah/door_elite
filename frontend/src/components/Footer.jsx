@@ -1,104 +1,223 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
-import { IoMdMail } from 'react-icons/io';
-import { FiPhone } from 'react-icons/fi';
+import React from 'react';
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaChevronRight,
+  FaApple,
+  FaGooglePlay,
+  FaHeart,
+  FaShieldAlt,
+  FaAward,
+  FaHeadset
+} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const services = [
+    { name: 'Home Cleaning', icon: '🧹' },
+    { name: 'Plumbing Services', icon: '🔧' },
+    { name: 'Electrical Work', icon: '⚡' },
+    { name: 'AC Service & Repair', icon: '❄️' },
+    { name: 'Carpentry', icon: '🔨' },
+    { name: 'Painting', icon: '🎨' }
+  ];
+
+  const companyLinks = [
+    { name: 'About Us', path: '/about', icon: FaHeart },
+    { name: 'Contact', path: '/contact', icon: FaHeadset },
+    { name: 'Careers', path: '#', icon: FaAward },
+    { name: 'Trust & Safety', path: '#', icon: FaShieldAlt },
+    { name: 'Press & Media', path: '#', icon: FaYoutube }
+  ];
+
+  const legalLinks = [
+    'Terms of Service',
+    'Privacy Policy', 
+    'Cookie Policy',
+    'Refund Policy'
+  ];
+
   return (
-    <footer className="bg-gray-900 text-white pt-12 pb-8 px-4 md:px-8 lg:px-16">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-gradient-to-br from-gray-900 via-emerald-900 to-gray-900 text-white">
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          
           {/* Company Info */}
-          <div className="mb-6">
-            <h3 className="text-xl font-bold mb-4">Urban Company</h3>
-            <p className="text-gray-400 mb-4">
-              Asia's largest online home services platform. Trusted by 20 million+ happy customers.
+          <div className="lg:col-span-1">
+            <div className="flex items-center mb-6">
+              <div className="w-10 h-10 bg-gradient-to-r from-emerald-400 to-amber-400 rounded-full flex items-center justify-center mr-3">
+                <span className="text-gray-900 text-lg font-bold">🌿</span>
+              </div>
+              <h3 className="text-2xl font-bold text-white">DoorElite</h3>
+            </div>
+            <p className="text-gray-300 mb-6 leading-relaxed">
+              Pakistan's most trusted platform for professional home services.
+              Connecting skilled professionals with households since 2014.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white">
-                <FaFacebook size={20} />
+            
+            {/* Social Media */}
+            <div className="flex space-x-3">
+              <a href="#" className="bg-emerald-600 hover:bg-emerald-500 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <FaFacebook />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <FaTwitter size={20} />
+              <a href="#" className="bg-blue-500 hover:bg-blue-400 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <FaTwitter />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <FaInstagram size={20} />
+              <a href="#" className="bg-pink-600 hover:bg-pink-500 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <FaInstagram />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <FaLinkedin size={20} />
+              <a href="#" className="bg-blue-700 hover:bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <FaLinkedin />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <FaYoutube size={20} />
+              <a href="#" className="bg-red-600 hover:bg-red-500 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <FaYoutube />
               </a>
             </div>
           </div>
 
           {/* Services */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-4">SERVICES</h3>
-            <ul className="space-y-2">
-              <li><Link to={"/services"} className="text-gray-400 hover:text-white">Home Cleaning</Link></li>
-              <li><Link to={"/services"} className="text-gray-400 hover:text-white">AC Service & Repair</Link></li>
-              <li><Link to={"/services"} className="text-gray-400 hover:text-white">Plumbing</Link></li>
-              <li><Link to={"/services"} className="text-gray-400 hover:text-white">Electrical</Link></li>
-              <li><Link to={"/services"} className="text-gray-400 hover:text-white">Carpentry</Link></li>
+          <div>
+            <h4 className="text-lg font-semibold mb-6 text-emerald-400">Our Services</h4>
+            <ul className="space-y-3">
+              {services.map((service, index) => (
+                <li key={index}>
+                  <Link 
+                    to="/services" 
+                    className="flex items-center text-gray-300 hover:text-white transition-colors duration-300 group"
+                  >
+                    <span className="mr-3 text-lg">{service.icon}</span>
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">{service.name}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Company */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-4">COMPANY</h3>
-            <ul className="space-y-2">
-              <li><Link to={"#"} className="text-gray-400 hover:text-white">About Us</Link></li>
-              <li><Link to={"#"} className="text-gray-400 hover:text-white">Careers</Link></li>
-              <li><Link to={"#"} className="text-gray-400 hover:text-white">Blog</Link></li>
-              <li><Link to={"#"} className="text-gray-400 hover:text-white">Press</Link></li>
-              <li><Link to={"#"} className="text-gray-400 hover:text-white">Contact Us</Link></li>
+          <div>
+            <h4 className="text-lg font-semibold mb-6 text-amber-400">Company</h4>
+            <ul className="space-y-3">
+              {companyLinks.map((link, index) => (
+                <li key={index}>
+                  <Link 
+                    to={link.path} 
+                    className="flex items-center text-gray-300 hover:text-white transition-colors duration-300 group"
+                  >
+                    <link.icon className="mr-3 text-emerald-400" />
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-4">CONTACT US</h3>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <IoMdMail className="text-gray-400" />
-                <span className="text-gray-400"><a href="mailto:support@urbancompany.com">support@urbancompany.com</a></span>
+          {/* Contact & App */}
+          <div>
+            <h4 className="text-lg font-semibold mb-6 text-purple-400">Get in Touch</h4>
+            
+            {/* Contact Info */}
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center space-x-3">
+                <div className="bg-emerald-600 p-2 rounded-full">
+                  <FaEnvelope className="text-white text-sm" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Email Us</p>
+                  <a href="mailto:support@doorelite.com" className="text-white hover:text-emerald-400 transition-colors">
+                    support@doorelite.com
+                  </a>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <FiPhone className="text-gray-400" />
-                <span className="text-gray-400">+91 800-123-4567</span>
+              
+              <div className="flex items-center space-x-3">
+                <div className="bg-amber-600 p-2 rounded-full">
+                  <FaPhone className="text-white text-sm" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Call Us</p>
+                  <a href="tel:+18001234567" className="text-white hover:text-amber-400 transition-colors">
+                    +1 (800) 123-4567
+                  </a>
+                </div>
               </div>
-<div>
-              <h4 className="text-lg font-semibold mb-4">Download App</h4>
-              <div className="space-y-3">
-                <button className="flex items-center bg-black text-white px-4 py-2 rounded">
-                  <span className="mr-2"><a href="#">App Store</a></span>
-                  <span>→</span>
-                </button>
-                <button className="flex items-center bg-black text-white px-4 py-2 rounded">
-                  <span className="mr-2"><a href="#">Google Play</a></span>
-                  <span>→</span>
-                </button>
+              
+              <div className="flex items-center space-x-3">
+                <div className="bg-blue-600 p-2 rounded-full">
+                  <FaMapMarkerAlt className="text-white text-sm" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-400">Head Office</p>
+                  <p className="text-white">Pakistan</p>
+                </div>
               </div>
             </div>
-            </div>
+
+            
           </div>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700 my-6"></div>
+        <div className="border-t border-gray-700 my-8"></div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="text-gray-400 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} Urban Elite. All rights reserved.
+        <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+          
+          {/* Copyright */}
+          <div className="text-center lg:text-left">
+            <p className="text-gray-400">
+              © {currentYear} DoorElite. All rights reserved.
+            </p>
+            <p className="text-sm text-gray-500 mt-1">
+              Empowering millions of professionals worldwide
+            </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to={"#"} className="text-gray-400 hover:text-white text-sm">Terms of Service</Link>
-            <Link to={"#"} className="text-gray-400 hover:text-white text-sm">Privacy Policy</Link>
-            <Link to={"#"} className="text-gray-400 hover:text-white text-sm">Trust & Safety</Link>
+
+          {/* Legal Links */}
+          <div className="flex flex-wrap justify-center gap-6">
+            {legalLinks.map((link, index) => (
+              <Link 
+                key={index}
+                to="#" 
+                className="text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+              >
+                {link}
+              </Link>
+            ))}
+          </div>
+
+          {/* Security & Trust */}
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 bg-emerald-800 px-3 py-2 rounded-full">
+              <FaShieldAlt className="text-emerald-400 text-sm" />
+              <span className="text-emerald-400 text-sm font-medium">SSL Secured</span>
+            </div>
+            <div className="flex items-center space-x-2 bg-amber-800 px-3 py-2 rounded-full">
+              <FaAward className="text-amber-400 text-sm" />
+              <span className="text-amber-400 text-sm font-medium">Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="bg-gray-950 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+            <div className="flex items-center space-x-4">
+              <span>🌟 4.8/5 Customer Rating</span>
+              <span>•</span>
+              <span>🛡️ 100% Secure Payments</span>
+            </div>
           </div>
         </div>
       </div>

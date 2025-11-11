@@ -146,8 +146,8 @@ const CartPage = () => {
         instructions: "",
       });
       
-      // Navigate to bookings page
-      navigate('/my-bookings');
+      // Navigate to orders page
+      navigate('/my-orders');
     } catch (error) {
       console.error('Booking error:', error);
       // Error is already handled in AppContext

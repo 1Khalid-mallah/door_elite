@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { toast } from 'react-hot-toast';
-import axios from 'axios';
 
 const ProfilePage = () => {
   const { user, setUser, axios: axiosInstance } = useAppContext();
@@ -99,171 +98,213 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-25 px-4">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-3xl font-bold mb-6 text-center">My Profile</h1>
-        
-        {/* Profile Section */}
-        <div className="flex flex-col md:flex-row gap-8 mb-8">
-          <div className="flex-shrink-0 flex flex-col items-center">
-            <div className="relative mb-4">
-              <img
-                src={previewAvatar || '/default-avatar.png'}
-                alt="Profile"
-                className="w-32 h-32 rounded-full object-cover border-4 border-emerald-100"
-              />
-              {isEditing && (
-                <label className="absolute bottom-0 right-0 bg-emerald-500 text-white p-2 rounded-full cursor-pointer hover:bg-emerald-600">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                  </svg>
-                </label>
-              )}
-            </div>
-            <h2 className="text-xl font-semibold">{user?.name}</h2>
-            <p className="text-gray-600">{user?.email}</p>
-          </div>
+    <div className="relative min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 py-20">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-full h-full" 
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+             }}>
+        </div>
+      </div>
 
-          {!isEditing && !isChangingPassword ? (
-            <div className="flex-1">
-              <div className="mb-4">
-                <h3 className="text-lg font-medium text-gray-900">Personal Information</h3>
-                <p className="mt-1 text-gray-600">Name: {user?.name}</p>
-                <p className="mt-1 text-gray-600">Email: {user?.email}</p>
-              </div>
-              <div className="flex gap-4 mt-6">
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition"
-                >
-                  Edit Profile
-                </button>
-                <button
-                  onClick={() => setIsChangingPassword(true)}
-                  className="px-4 py-2 bg-amber-500 text-white rounded hover:bg-amber-600 transition"
-                >
-                  Change Password
-                </button>
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-emerald-100/50">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+              My <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Profile</span>
+            </h1>
+            <p className="text-gray-600 text-lg">Manage your account settings and preferences</p>
+          </div>
+          
+          {/* Profile Section */}
+          <div className="flex flex-col lg:flex-row gap-12">
+            <div className="lg:w-1/3 flex-shrink-0">
+              <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-emerald-100/30 shadow-lg">
+                <div className="text-center">
+                  <div className="relative mb-6">
+                    <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 p-1 shadow-xl">
+                      <img
+                        src={previewAvatar || '/default-avatar.png'}
+                        alt="Profile"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    {isEditing && (
+                      <label className="absolute bottom-0 right-8 bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-3 rounded-full cursor-pointer hover:from-emerald-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleFileChange}
+                        />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                        </svg>
+                      </label>
+                    )}
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">{user?.name}</h2>
+                  <p className="text-gray-600 mb-6">{user?.email}</p>
+                  
+                  {!isEditing && !isChangingPassword && (
+                    <div className="space-y-3">
+                      <button
+                        onClick={() => setIsEditing(true)}
+                        className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-3 rounded-full font-semibold hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                      >
+                        Edit Profile
+                      </button>
+                      <button
+                        onClick={() => setIsChangingPassword(true)}
+                        className="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-3 rounded-full font-semibold hover:from-teal-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                      >
+                        Change Password
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          ) : isEditing ? (
-            <form onSubmit={handleSubmit} className="flex-1">
-              <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-2 border"
-                  required
-                />
+
+            <div className="lg:w-2/3">
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 border border-emerald-100/30 shadow-lg">
+                {!isEditing && !isChangingPassword ? (
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Personal Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="bg-emerald-50/50 rounded-xl p-4 border border-emerald-100/50">
+                        <h4 className="font-semibold text-emerald-700 mb-2">Full Name</h4>
+                        <p className="text-gray-900">{user?.name}</p>
+                      </div>
+                      <div className="bg-teal-50/50 rounded-xl p-4 border border-teal-100/50">
+                        <h4 className="font-semibold text-teal-700 mb-2">Email Address</h4>
+                        <p className="text-gray-900">{user?.email}</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : isEditing ? (
+                  <form onSubmit={handleSubmit}>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Edit Profile</h3>
+                    <div className="space-y-6">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                          required
+                        />
+                      </div>
+                      <div className="flex gap-4 pt-4">
+                        <button
+                          type="submit"
+                          className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-3 rounded-full font-semibold hover:from-emerald-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                        >
+                          Save Changes
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsEditing(false);
+                            setPreviewAvatar(user?.avatar || '');
+                          }}
+                          className="px-6 py-3 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition-all duration-300"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handlePasswordChange}>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Change Password</h3>
+                    <div className="space-y-6">
+                      <div>
+                        <label htmlFor="currentPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+                          Current Password
+                        </label>
+                        <input
+                          type="password"
+                          id="currentPassword"
+                          name="currentPassword"
+                          value={formData.currentPassword}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="newPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+                          New Password
+                        </label>
+                        <input
+                          type="password"
+                          id="newPassword"
+                          name="newPassword"
+                          value={formData.newPassword}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                          required
+                          minLength="6"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+                          Confirm New Password
+                        </label>
+                        <input
+                          type="password"
+                          id="confirmPassword"
+                          name="confirmPassword"
+                          value={formData.confirmPassword}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all duration-300 bg-white/70 backdrop-blur-sm"
+                          required
+                          minLength="6"
+                        />
+                      </div>
+                      <div className="flex gap-4 pt-4">
+                        <button
+                          type="submit"
+                          className="flex-1 bg-gradient-to-r from-teal-500 to-teal-600 text-white px-6 py-3 rounded-full font-semibold hover:from-teal-600 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                        >
+                          Change Password
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIsChangingPassword(false)}
+                          className="px-6 py-3 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition-all duration-300"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
               </div>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-2 border"
-                  required
-                />
-              </div>
-              <div className="flex gap-4 mt-6">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition"
-                >
-                  Save Changes
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsEditing(false);
-                    setPreviewAvatar(user?.avatar || '');
-                  }}
-                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          ) : (
-            <form onSubmit={handlePasswordChange} className="flex-1">
-              <div className="mb-4">
-                <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">
-                  Current Password
-                </label>
-                <input
-                  type="password"
-                  id="currentPassword"
-                  name="currentPassword"
-                  value={formData.currentPassword}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-2 border"
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  name="newPassword"
-                  value={formData.newPassword}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-2 border"
-                  required
-                  minLength="6"
-                />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                  Confirm New Password
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-2 border"
-                  required
-                  minLength="6"
-                />
-              </div>
-              <div className="flex gap-4 mt-6">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600 transition"
-                >
-                  Change Password
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsChangingPassword(false)}
-                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
